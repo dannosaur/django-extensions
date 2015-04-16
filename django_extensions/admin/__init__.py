@@ -15,7 +15,8 @@ from django.utils.text import get_text_list
 from django.contrib.admin import ModelAdmin
 
 try:
-    from django.apps.config import get_model
+    from django.apps import apps
+    get_model = apps.get_model
 except ImportError:
     from django.db.models import get_model
 
