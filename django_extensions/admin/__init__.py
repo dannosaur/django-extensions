@@ -15,6 +15,11 @@ from django.utils.text import get_text_list
 from django.contrib.admin import ModelAdmin
 
 try:
+    from django.apps.config import get_model
+except ImportError:
+    from django.db.models import get_model
+
+try:
     from functools import update_wrapper
     assert update_wrapper
 except ImportError:
@@ -96,7 +101,7 @@ class ForeignKeyAutocompleteAdmin(ModelAdmin):
                     return "%s__search" % field_name[1:]
                 else:
                     return "%s__icontains" % field_name
-            model = models.get_model(app_label, model_name)
+            model = get_model(app_label, model_name)
             queryset = model._default_manager.all()
             data = ''
             if query:
